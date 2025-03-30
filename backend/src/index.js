@@ -1,15 +1,15 @@
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
+import path from 'path';
 
 import authRoutes from './routes/auth.route.js';
 import msgRoutes from './routes/message.route.js';
 
 import { connectDB } from './lib/db.js';
-import dotenv from 'dotenv';
-dotenv.config();
+import { config } from 'dotenv';
+config();
 
-import path from 'path';
 import { app, server } from './lib/socket.js';
 
 const PORT = process.env.PORT;
@@ -25,9 +25,15 @@ app.use(cors({
 app.use("/api/auth", authRoutes);
 app.use("/api/msg",msgRoutes);
 
-app.get('/', (req, res) => {    
-    res.send('Hello world');
-});
+if(process.env.NODE_ENV==="production"){
+    app.use(express.static(path.join(__dirname, "../frontend/dist")));
+
+    app.get("*",(req,res)=>{
+        res.sendFile(path.join(__dirname, "../frontend","dist","index.html"));
+    })
+}
+
+
 connectDB();
 server.listen(PORT,()=>{
     console.log(`Server is running on ${PORT}`);
