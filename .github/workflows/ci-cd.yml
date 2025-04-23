@@ -52,10 +52,10 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Tag Backend Image
-        run: docker tag chatapp-backend ${{ secrets.DOCKER_USERNAME }}/chatapp-backend:latest
+        run: docker tag abhijeet/chatapp-backend ${{ secrets.DOCKER_USERNAME }}/chatapp-backend:latest
 
       - name: Tag Frontend Image
-        run: docker tag chatapp-frontend ${{ secrets.DOCKER_USERNAME }}/chatapp-frontend:latest
+        run: docker tag abhijeet/chatapp-frontend ${{ secrets.DOCKER_USERNAME }}/chatapp-frontend:latest
 
 
       - name: Push Backend Image
