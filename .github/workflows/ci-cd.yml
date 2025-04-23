@@ -31,6 +31,15 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-docker-
 
+      - name: Create .env file for backend
+        run: |
+          echo "MONGO_URI=${{ secrets.MONGO_URI }}" >> backend/.env
+          echo "PORT=${{ secrets.PORT }}" >> backend/.env
+          echo "CLOUDINARY_CLOUD_NAME=${{ secrets.CLOUDINARY_CLOUD_NAME }}" >> backend/.env
+          echo "CLOUDINARY_API_KEY=${{ secrets.CLOUDINARY_API_KEY }}" >> backend/.env
+          echo "CLOUDINARY_API_SECRET=${{ secrets.CLOUDINARY_API_SECRET }}" >> backend/.env
+          echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> backend/.env
+
       - name: Build Docker Images
         run: docker-compose build
 
